@@ -64,6 +64,16 @@ public class BookController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    @GetMapping("/getBookByTitle/{title}")
+    public ResponseEntity<Book> getBookByTitle(@PathVariable String title) {
+        Optional<Book> bookData = bookRepository.findByTitle(title);
+
+        if (bookData.isPresent()) {
+            return new ResponseEntity<>(bookData.get(), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
     @DeleteMapping("/deleteBookById/{id}")
     public ResponseEntity<HttpStatus> deleteBookById(@PathVariable Long id) {
         bookRepository.deleteById(id);
