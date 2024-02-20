@@ -65,11 +65,11 @@ public class BookController {
     }
 
     @GetMapping("/getBookByTitle/{title}")
-    public ResponseEntity<Book> getBookByTitle(@PathVariable String title) {
-        Optional<Book> bookData = bookRepository.findByTitle(title);
+    public ResponseEntity<List<Optional<Book>>> getBookByTitle(@PathVariable String title) {
+        List<Optional<Book>> bookData = bookRepository.findByTitle(title);
 
-        if (bookData.isPresent()) {
-            return new ResponseEntity<>(bookData.get(), HttpStatus.OK);
+        if (!bookData.isEmpty()) {
+            return new ResponseEntity<>(bookData, HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
